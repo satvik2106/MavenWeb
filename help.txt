@@ -5,3 +5,90 @@
     <version>4.0.1</version>
     <scope>provided</scope>
 </dependency>
+
+✅ A) CREATING THE MULTI-MODULE PROJECT
+
+Step 1: Open Eclipse IDE for Enterprise Java & Web Developers.
+Step 2: Click File → New → Other → Maven → Maven Project → Next.
+Step 3: Check Create a simple project (skip archetype selection) → Click Next.
+Step 4: Enter project details:
+ • GroupId: KMIT
+ • ArtifactId: MultiModule
+ • Packaging: pom
+ • Name: Multimodule creation
+ • Description: Sample multimodule with parent-child hierarchy
+→ Click Next, then Finish.
+
+Step 5: The MultiModule (parent) folder appears in Project Explorer.
+
+✅ B) CREATING CHILD MODULE 1 (JAR MODULE)
+
+Step 6: Right-click the MultiModule project → New → Maven Module.
+Step 7: Check Create a simple project (skip archetype selection).
+Step 8: Enter:
+ • ArtifactId: MultiModuleChild1
+→ Click Next, then Finish.
+
+Step 9: Now MultiModuleChild1 appears under the parent with its own pom.xml.
+
+✅ C) CREATING CHILD MODULE 2 (WEB MODULE – WAR)
+
+Step 10: Right-click MultiModule → New → Maven Module.
+Step 11: Enter:
+ • ArtifactId: MultiModuleChild2
+→ Click Next.
+
+Step 12: In Filter box, type:
+ maven-archetype-webapp
+
+Step 13: Select:
+ • org.apache.maven.archetypes : maven-archetype-webapp
+ • Version 1.4 or 1.5
+→ Click Next.
+
+Step 14: Click Finish.
+
+Step 15: Eclipse console asks:
+
+Y : confirm
+
+
+Type Y and press Enter.
+
+Step 16: Now MultiModuleChild2 (WAR module) is added under the parent.
+
+✅ D) LINKING CHILD MODULES (Child2 depends on Child1)
+
+Step 17: Open MultiModuleChild2/pom.xml.
+Step 18: Scroll to the <dependencies> section.
+Step 19: Add Child1 as a dependency:
+
+<dependency>
+    <groupId>KMIT</groupId>
+    <artifactId>MultiModuleChild1</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+</dependency>
+
+
+Step 20: Save the pom.xml.
+
+✅ E) BUILD FAILURE & CORRECT BUILD ORDER
+
+If you now try to build Child2:
+
+Step 21: Right-click MultiModuleChild2 → Run As → Maven Build
+ → BUILD WILL FAIL ❌
+
+Reason:
+
+Child1 depends on Parent
+
+Child2 depends on Child1
+
+So Parent → Child1 → Child2 must be built in proper order.
+
+Correct Build Order:
+
+Step 22: Right-click MultiModule (parent) → Run As → Maven Build → SUCCESS
+Step 23: Right-click MultiModuleChild1 → Run As → Maven Build → SUCCESS
+Step 24: Right-click MultiModuleChild2 → Run As → Maven Build → SUCCESS
